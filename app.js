@@ -1,24 +1,27 @@
-import http from 'https';
-import DashButton from 'dash-button';
+require('dotenv').config();
 
-const SLACK_HOSTNAME = 'https://hooks.slack.com';
+const axios = require('axios');
+const DashButton = require('dash-button');
 
 const button = new DashButton(process.env.DASH_BUTTON_MAC_ADDRESS);
 
-button.addListener(() => {
-	const request = http.request({
-	    hostname: SLACK_HOSTNAME,
-	    path: process.env.SLACK_HOOK_URL,
-	    method: 'POST',
-		headers: { 'Content-Type': 'application/json' }
-    });
+console.log('----------');
+console.log('STARTED');
+console.log('----------');
 
-    request.write({
-        channel: process.env.SLACK_CHANNEL,
-        username: process.env.SLACK_USERNAME || 'Dash Button',
-        text: process.env.SLACK_TEXT,
-        icon_emoji: process.env.SLACK_EMOJI || ':radio_button:'
-    });
+button.addListener(async () => {
+	try {
+        const response = await axios.post(process.env.NEXMO_API_URL, {
+            api_key: process.env.NEXMO_API_KEY,
+            api_secret: process.env.NEXMO_API_SECRET,
+            from: 'The RockPool',
+            text: "There's someone at the door",
+            to: process.env.PHONE_NUMBER,
+        });
 
-    request.end();
+        console.log('MESSAGE SENT');
+        console.info(response.data);
+	} catch (error) {
+		console.error(error);
+	}
 });

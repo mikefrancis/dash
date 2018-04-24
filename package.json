@@ -1,13 +1,16 @@
 {
-  "name": "mikefrancis/dash",
+  "name": "@mikefrancis/dash",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "dependencies": {
-    "dash-button": "^2.0.0"
+    "axios": "^0.18.0",
+    "dash-button": "^2.0.0",
+    "dotenv": "^5.0.1"
   },
   "devDependencies": {},
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
